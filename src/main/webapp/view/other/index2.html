@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>玩转spring boot——结合JPA</title>
+<script src="//cdn.bootcss.com/angular.js/1.5.6/angular.min.js"></script>
+<script type="text/javascript">
+	/*<![CDATA[*/
+	var app = angular.module('app', []);
+	app.controller('MainController', function($rootScope, $scope, $http) {
+
+		$scope.data = {};
+		$scope.rows = [];
+
+		//添加
+		$scope.add = function() {
+			$scope.data = {
+				no : 'No.1234567890',
+				quantity : 100,
+				'date' : '2017-01-01'
+			};
+		};
+
+		//保存
+		$scope.save = function() {
+			$http({
+				url : '/save',
+				method : 'POST',
+				data : $scope.data
+			}).success(function(r) {
+				//保存成功后刷新
+				window.location.reload();
+			});
+		};
+
+		//初始化载入数据
+		$http({
+			url : '/findAll',
+			method : 'POST'
+		}).success(function(rows) {
+			for ( var i in rows) {
+				var row = rows[i];
+				$scope.rows.push(row);
+			}
+		});
+
+	});
+
+	/*]]>*/
+</script>
+</head>
+<body ng-app="app" ng-controller="MainController">
+	<h1>玩转spring boot——JPA事务</h1>
+
+	<input type="button" value="添加" ng-click="add()" />
+	<input type="button" value="保存" ng-click="save()" />
+	<br />
+	<br />
+	<h3>订单信息：</h3>
+	<input type="hidden" ng-model="data.id" />
+	<table cellspacing="1" style="background-color: #a0c6e5">
+		<tr>
+			<td>编号：</td>
+			<td><input ng-model="data.no" /></td>
+			<td>日期：</td>
+			<td><input ng-model="data.date" /></td>
+			<td>数量：</td>
+			<td><input ng-model="data.quantity" /></td>
+		</tr>
+	</table>
+	<br />
+
+	<h3>订单列表：</h3>
+	<table cellspacing="1" style="background-color: #a0c6e5">
+		<tr ng-repeat="row in rows" bgcolor='#F4FAFF'>
+			<td>{{row.no}}</td>
+			<td>{{row.date}}</td>
+			<td>{{row.quantity}}</td>
+		</tr>
+	</table>
+
+</body>
+</html>
