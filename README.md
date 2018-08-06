@@ -1,2 +1,2 @@
 # Libra
-SpringBoot+JPA+LayUI
+SpringBoot+JPA+LayUI Version 1.0
