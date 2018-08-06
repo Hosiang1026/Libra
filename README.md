@@ -4,6 +4,6 @@
 
 框架：SpringBoot+Spring Data JPA+LayUI 
 
-数据库 MySql JPA自动根据实体生成数据库表
+数据库 MySql JPA根据实体自动生成数据库表
 
 采用热部署，方便开发！
